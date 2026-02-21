@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/player_background">
+
+    <FrameLayout
+        android:id="@+id/vlcContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <org.videolan.libvlc.util.VLCVideoLayout
+            android:id="@+id/vlcVideoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:use_controller="false" />
+
+    <!-- Custom Subtitle Layer -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subtitleLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:paddingBottom="2dp">
+
+        <com.LegendAmardeep.veloraplayer.ui.player.SubtitleTextView
+            android:id="@+id/tvCustomSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:background="#80000000"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Sample Subtitle Text"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Buffering Layer -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bufferingLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbCircular"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvBufferingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="monospace"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pbCircular" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- UI Overlay -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/uiLayers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp">
+
+        <View
+            android:id="@+id/topBarGradient"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_gradient_top"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.95">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ellipsize="marquee"
+                android:fontFamily="monospace"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toStartOf="@+id/tvClock"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                tools:text="Video_Title.mp4" />
+
+            <TextView
+                android:id="@+id/tvClock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="monospace"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toStartOf="@+id/btnAudioTrack"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                tools:text="12:45 PM"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/btnAudioTrack"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toStartOf="@+id/btnSubtitle"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                app:srcCompat="@drawable/ic_audio_track"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/btnSubtitle"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toStartOf="@+id/tvDecoder"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                app:srcCompat="@drawable/ic_subtitle"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvDecoder"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:text="HW"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toStartOf="@+id/btnMenu"
+                app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                app:srcCompat="@drawable/ic_more_vert"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/btnMute"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_icon_circle"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_volume_high_solid" />
+
+            <ImageButton android:id="@+id/btnShuffle" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginBottom="12dp" android:background="@drawable/bg_icon_circle" android:padding="12dp" app:srcCompat="@drawable/ic_shuffle_solid" app:tint="@color/white" />
+            <ImageButton android:id="@+id/btnLoop" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginBottom="12dp" android:background="@drawable/bg_icon_circle" android:padding="12dp" app:srcCompat="@drawable/ic_repeat" app:tint="@color/white" />
+            <ImageButton android:id="@+id/btnSleepTimer" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginBottom="12dp" android:background="@drawable/bg_icon_circle" android:padding="12dp" app:srcCompat="@drawable/ic_alarm_clock_regular" app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/btnSpeed"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_icon_circle"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="1.0x" />
+
+            <ImageButton android:id="@+id/btnBackgroundPlay" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginBottom="12dp" android:background="@drawable/bg_icon_circle" android:padding="12dp" app:srcCompat="@drawable/ic_headset" app:tint="@color/white" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/toolRowFlow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:constraint_referenced_ids="btnMute,btnShuffle,btnLoop,btnSleepTimer,btnSpeed,btnBackgroundPlay"
+                app:flow_horizontalGap="12dp"
+                app:flow_horizontalStyle="packed"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnBack" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/bottomBarGradient"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_gradient_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomControls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.94">
+
+            <TextView
+                android:id="@+id/tvCurrentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/seekBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seekBar"
+                tools:text="00:00" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:max="1000"
+                android:progressDrawable="@drawable/custom_seekbar_progress"
+                android:thumb="@drawable/custom_seekbar_thumb"
+                app:layout_constraintEnd_toStartOf="@+id/tvTotalTime"
+                app:layout_constraintStart_toEndOf="@id/tvCurrentTime"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTotalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/seekBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seekBar"
+                tools:text="00:00" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mainControls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/seekBar">
+
+                <LinearLayout
+                    android:id="@+id/leftControls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageButton android:id="@+id/btnLock" android:layout_width="36dp" android:layout_height="36dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_lock_open" app:tint="@color/white" />
+                    <ImageButton android:id="@+id/btnResize" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginStart="12dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_aspect_ratio" app:tint="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/centerControls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/rightControls"
+                    app:layout_constraintStart_toEndOf="@+id/leftControls"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageButton android:id="@+id/btnPrev" android:layout_width="40dp" android:layout_height="40dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_backward_step_solid" app:tint="@color/white" />
+                    <ImageButton android:id="@+id/btnPlayPause" android:layout_width="56dp" android:layout_height="56dp" android:layout_marginHorizontal="@dimen/play_pause_margin" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_play_solid" app:tint="@color/white" />
+                    <ImageButton android:id="@+id/btnNext" android:layout_width="40dp" android:layout_height="40dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_forward_step_solid" app:tint="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rightControls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageButton android:id="@+id/btnOrientation" android:layout_width="36dp" android:layout_height="36dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_rotate_toggle1" app:tint="@color/white" />
+                    <ImageButton android:id="@+id/btnPlaylist" android:layout_width="36dp" android:layout_height="36dp" android:layout_marginStart="12dp" android:background="?attr/selectableItemBackgroundBorderless" app:srcCompat="@drawable/ic_playlist_better" app:tint="@color/white" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Playlist Overlay -->
+    <include
+        android:id="@+id/playlistLayout"
+        layout="@layout/layout_playlist_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="40dp"
+        android:visibility="gone" />
+
+    <!-- Audio Track Overlay -->
+    <include
+        android:id="@+id/audioTrackLayout"
+        layout="@layout/layout_audio_track_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="45dp"
+        android:visibility="gone" />
+
+    <!-- Subtitle Overlay -->
+    <include
+        android:id="@+id/subtitleLayout"
+        layout="@layout/layout_subtitle_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="46dp"
+        android:visibility="gone" />
+
+    <!-- Subtitle File Selection Overlay -->
+    <include
+        android:id="@+id/subtitleFileLayout"
+        layout="@layout/layout_subtitle_track_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="46dp"
+        android:visibility="gone" />
+
+    <!-- Subtitle Customization Overlay -->
+    <include
+        android:id="@+id/subtitleCustomizationLayout"
+        layout="@layout/layout_subtitle_customization"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="47dp"
+        android:visibility="gone" />
+
+    <!-- More Menu Overlay -->
+    <include
+        android:id="@+id/moreMenuLayout"
+        layout="@layout/layout_more_menu_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="48dp"
+        android:visibility="gone" />
+
+    <!-- Speed Control Overlay -->
+    <include
+        android:id="@+id/speedControlLayout"
+        layout="@layout/layout_speed_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Floating Unlock Button -->
+    <ImageButton
+        android:id="@+id/btnUnlock"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_icon_circle"
+        android:elevation="20dp"
+        android:padding="14dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_lock"
+        app:tint="@color/white" />
+
+    <!-- Huge YouTube Style Seek Indicators -->
+    <FrameLayout
+        android:id="@+id/seekLeftIndicator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_seek_left"
+        android:elevation="25dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.7">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/innerSeekLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView android:id="@+id/ivSeekLeft" android:layout_width="26dp" android:layout_height="26dp" app:srcCompat="@drawable/ic_backward_solid" app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvSeekLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10s"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textFontWeight="800"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/seekRightIndicator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_seek_right"
+        android:elevation="25dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.7">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/innerSeekRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView android:id="@+id/ivSeekRight" android:layout_width="26dp" android:layout_height="26dp" app:srcCompat="@drawable/ic_forward_solid" app:tint="@color/white" />
+                <TextView android:id="@+id/tvSeekRight" android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="10s" android:textColor="@color/white" android:textSize="14sp" android:textFontWeight="800" android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <!-- Volume Indicator HUD (Left Side) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/volumeIndicatorCard"
+        android:layout_width="60dp"
+        android:layout_height="200dp"
+        android:elevation="30dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#B3000000"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/tvVolumeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="100"/>
+            <ProgressBar
+                android:id="@+id/pbVolume"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="8dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="8dp"
+                android:progressDrawable="@drawable/bg_vertical_progress"
+                app:layout_constraintBottom_toTopOf="@+id/ivVolumeIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvVolumeValue"
+                android:progress="50"
+                android:max="100"/>
+            <ImageView
+                android:id="@+id/ivVolumeIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="4dp"
+                app:srcCompat="@drawable/ic_volume_high_solid"
+                app:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Brightness Indicator HUD (Right Side) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/brightnessIndicatorCard"
+        android:layout_width="60dp"
+        android:layout_height="200dp"
+        android:elevation="30dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#B3000000"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/tvBrightnessValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="100"/>
+            <ProgressBar
+                android:id="@+id/pbBrightness"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="8dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="8dp"
+                android:progressDrawable="@drawable/bg_vertical_progress"
+                app:layout_constraintBottom_toTopOf="@+id/ivBrightnessIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBrightnessValue"
+                android:progress="50"
+                android:max="100"/>
+            <ImageView
+                android:id="@+id/ivBrightnessIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="4dp"
+                app:srcCompat="@drawable/ic_brightness_light"
+                app:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Seek Indicator HUD (Center) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/seekIndicatorCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="30dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#B3000000"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp">
+            <TextView
+                android:id="@+id/tvSeekTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                tools:text="01:23:45"/>
+            <TextView
+                android:id="@+id/tvSeekDiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF00E676"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="[ +00:10 ]"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Speed Indicator HUD (Center) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/speedIndicatorCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="30dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#B3000000"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/tvSpeedIndicatorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            tools:text="Speed: 1.25x"/>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

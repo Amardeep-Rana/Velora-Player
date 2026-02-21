@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Modern Dark Theme Palette -->
+    <color name="primary">#D0BCFF</color>
+    <color name="primary_variant">#381E72</color>
+    <color name="secondary">#CCC2DC</color>
+    <color name="background">#1C1B1F</color>
+    <color name="surface">#2B2930</color>
+    <color name="error">#F2B8B5</color>
+
+    <color name="accent">#D0BCFF</color>
+    <color name="player_background">#000000</color>
+
+    <color name="text_primary">#E6E1E5</color>
+    <color name="text_secondary">#938F99</color>
+
+    <color name="glass_white">#26FFFFFF</color>
+    <color name="glass_dark">#80000000</color>
+</resources>

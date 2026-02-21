@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/speedControlCard"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#CC000000"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="30dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <!-- Top Header: Minus, Current Speed, Plus -->
+        <ImageButton
+            android:id="@+id/btnSpeedMinus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_icon_circle"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintBottom_toBottomOf="@+id/speedDisplayContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/speedDisplayContainer"
+            app:tint="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/speedDisplayContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:background="@drawable/bg_speed_display_box"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnSpeedPlus"
+            app:layout_constraintStart_toEndOf="@+id/btnSpeedMinus"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvCurrentSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="1.00x" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnSpeedPlus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_icon_circle"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@+id/speedDisplayContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/speedDisplayContainer"
+            app:tint="@color/white" />
+
+        <!-- Circular Speed Buttons (Flow for auto-wrap) -->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/speedFlow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:constraint_referenced_ids="btnSpeed025,btnSpeed050,btnSpeed075,btnSpeed100,btnSpeed125,btnSpeed150,btnSpeed175,btnSpeed200,btnSpeed250,btnSpeed300,btnSpeed350,btnSpeed400"
+            app:flow_horizontalGap="8dp"
+            app:flow_verticalGap="12dp"
+            app:flow_wrapMode="chain"
+            app:flow_horizontalStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/speedDisplayContainer" />
+
+        <TextView android:id="@+id/btnSpeed025" style="@style/SpeedButtonStyle" android:text="0.25x" />
+        <TextView android:id="@+id/btnSpeed050" style="@style/SpeedButtonStyle" android:text="0.5x" />
+        <TextView android:id="@+id/btnSpeed075" style="@style/SpeedButtonStyle" android:text="0.75x" />
+        <TextView android:id="@+id/btnSpeed100" style="@style/SpeedButtonStyle" android:text="1.0x" />
+        <TextView android:id="@+id/btnSpeed125" style="@style/SpeedButtonStyle" android:text="1.25x" />
+        <TextView android:id="@+id/btnSpeed150" style="@style/SpeedButtonStyle" android:text="1.5x" />
+        <TextView android:id="@+id/btnSpeed175" style="@style/SpeedButtonStyle" android:text="1.75x" />
+        <TextView android:id="@+id/btnSpeed200" style="@style/SpeedButtonStyle" android:text="2.0x" />
+        <TextView android:id="@+id/btnSpeed250" style="@style/SpeedButtonStyle" android:text="2.5x" />
+        <TextView android:id="@+id/btnSpeed300" style="@style/SpeedButtonStyle" android:text="3.0x" />
+        <TextView android:id="@+id/btnSpeed350" style="@style/SpeedButtonStyle" android:text="3.5x" />
+        <TextView android:id="@+id/btnSpeed400" style="@style/SpeedButtonStyle" android:text="4.0x" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
