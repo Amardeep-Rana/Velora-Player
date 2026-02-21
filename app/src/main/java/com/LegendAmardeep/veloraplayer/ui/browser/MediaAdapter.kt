@@ -37,7 +37,12 @@ class MediaAdapter(
             }
 
             override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-                return oldItem == newItem
+                if (oldItem is Folder && newItem is Folder) {
+                    return oldItem.name == newItem.name && oldItem.mediaFiles.size == newItem.mediaFiles.size
+                } else if (oldItem is MediaFile && newItem is MediaFile) {
+                    return oldItem.name == newItem.name && oldItem.size == newItem.size && oldItem.duration == newItem.duration
+                }
+                return false
             }
         }
     }
