@@ -25,7 +25,7 @@
 Velora Player is loaded with professional-grade features that give you full control over your media:
 
 ### 🎥 Video Mastery
-*   **Multi-Engine Playback**: Switch between **HW (Hardware)**, **HW+**, and **SW (Software)** decoders on the fly for maximum compatibility.
+*   **Multi-Engine Playback**: Switch between **HW (Hardware (based on exoplayer))**, **HW+ (based on Libvlc)**, and **SW (Software (based on Libvlc))** decoders on the fly for maximum compatibility.
 *   **Ultra-Smooth Scrubbing**: Experience lightning-fast seeking with keyframe-accurate scrubbing.
 *   **Dual-Engine Power**: Powered by **Media3 ExoPlayer** and **LibVLC** to play literally any video format (MKV, MP4, AVI, WEBM, and more).
 
